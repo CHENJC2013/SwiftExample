@@ -16,9 +16,10 @@ class ViewController: UIViewController {
      2、当给变量添加lazy时，意味着它将不会初始化，直到需要使用它的时候
      3、不能在lazy变量上使用属性观察者didSet等
      */
-    lazy var game = Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
     
-    var flipCount = 0 {
+    //private(set) 不允许设置值
+    private(set) var flipCount = 0 {
 //当你声明一个存储属性，你可以使用闭包定义一个【属性观察器】，该闭包中的代码会在属性被设值的时候执行。
 //  willSet 观察器会在属性被赋新值之前被运行，didSet 观察器则会在属性被赋新值之后运行。
 //  无论新值是否等于属性的旧值它们都会被执行。
@@ -33,25 +34,60 @@ class ViewController: UIViewController {
     
     @IBOutlet var cardButtons: [UIButton]!
     
-    var emojiChoices = ["🎃", "🤖", "🎃", "🤖"]
     
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount += 1
-//        flipCountLabel.text = "Flips:\(flipCount)"  //使用didSet
         if let cardNumber = cardButtons.firstIndex(of: sender) {
-            flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
+            game.chooseCard(at: cardNumber)
+            updateViewFromModel()
         }
     }
     
-    func flipCard(withEmoji emoji: String, on button: UIButton) {
-        if button.currentTitle == emoji {
-            button.setTitle("", for: UIControl.State.normal)
-            button.backgroundColor = #colorLiteral(red: 0.9917996526, green: 0.6423984766, blue: 0.01227067038, alpha: 1)
-        } else {
-            button.setTitle(emoji, for: UIControl.State.normal)
-            button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    func updateViewFromModel() {
+//        for index in 0..<cardButtons.count {
+//        indices 属性返回一个 Range \<Index>，可以用来遍历集合中所有的有效索引
+        for index in cardButtons.indices {
+            let button = cardButtons[index]
+            let card = game.cards[index]
+            
+            if card.isFaceUp {
+                button.setTitle(emoji(for: card), for: UIControl.State.normal)
+                button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            } else {
+                button.setTitle("", for: UIControl.State.normal)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 0.9917996526, green: 0.6423984766, blue: 0.01227067038, alpha: 1)
+            }
         }
+    }
+    
+    var emojiChoices = ["🎃", "🤖", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇"]
+    
+    var emoji = [Int: String]()
+    
+    func emoji(for card: Card) -> String {
+        
+        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
+            let randomIndex =
+            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        }
+//        if emoji[card.identifier] != nil {
+//            return emoji[card.identifier]!
+//        } else {
+//            return "?"
+//        }
+        return emoji[card.identifier] ?? "?"
     }
     
 }
 
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        } else {
+            return 0
+        }
+    }
+}

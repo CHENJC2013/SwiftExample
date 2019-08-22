@@ -34,9 +34,9 @@ struct Card {
      2、修饰变量，只会分配一次内存
      3、修饰局部变量，延长生命周期，跟整个应用程序有关，程序结束才会销毁。 而全局变量本来的生命周期就是整个程序运行期间
      */
-    static var identifierFactory = 0
+    private static var identifierFactory = 0
     
-    static func getUniqueIdentifier() -> Int {
+    private static func getUniqueIdentifier() -> Int {
         //因为是在Static方法中调用，所以可以不用写Card.identifierFactory
         identifierFactory += 1
         return identifierFactory

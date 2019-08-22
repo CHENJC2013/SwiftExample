@@ -8,17 +8,55 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     
 //    var cards = Array<Card>()
-    var cards = [Card]()
+    private(set) var cards = [Card]()
     
-    func chooseCard(at index: Int) {
-        
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
+//        计算属性
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
+    
+//   mutating 结构体和枚举是值类型。默认情况下，值类型属性不能被自身的实例方法修改。
+//    在 func关键字前放一个 mutating关键字来使属性可被修改
+//    *** 在class中都不需要写mutating,因为class是引用类型
+    mutating func chooseCard(at index: Int) {
+//        assert: 断言，assert中的第一个参数为false时，程序会自动crash，并打印第二个参数
+//        发布后会自己忽略断言
+        assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index): 传入的索引在cards中不存在")
+        if !cards[index].isMatched {
+            if let matchIndex = indexOfTheOneAndOnlyFaceUpCard, matchIndex != index {
+                if cards[matchIndex].identifier == cards[index].identifier {
+                    cards[matchIndex].isMatched = true
+                    cards[index].isMatched = true
+                }
+                cards[index].isFaceUp = true
+            } else {
+                indexOfTheOneAndOnlyFaceUpCard = index
+            }
+        }
     }
 
     init(numberOfPairsOfCards: Int) {
-     
+        assert(numberOfPairsOfCards > 0, "init(\(numberOfPairsOfCards): 参数必须大于0")
 //        let card = Card()//报错：Struct有一个自动获取的构造器，与类的不同，此init方法中会包含Struct中的所有变量做为参数
 //        let card = Card(isFaceUp: false, isMatched: false, identifier: T##Int)
         for _ in 0..<numberOfPairsOfCards { // <小于号代表开区间，不包含number的值

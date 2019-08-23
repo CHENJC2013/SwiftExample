@@ -25,12 +25,26 @@ class ViewController: UIViewController {
 //  无论新值是否等于属性的旧值它们都会被执行。
 //  需要注意的是当属性在初始化方法中进行赋值时，不会触发观察器的代码
         didSet { //属性观察器
-            flipCountLabel.text = "Flips:\(flipCount)"
+            updateFilpCountLabel()
         }
+    }
+    
+    private func updateFilpCountLabel() {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 0.9512525201, green: 0.289773345, blue: 0, alpha: 1)
+            
+        ]
+        let attributeString = NSAttributedString.init(string: "Flips:\(flipCount)", attributes: attributes)
+        flipCountLabel.attributedText = attributeString
     }
 
     //Optional: 可选类型，只有两种状态（有值、没值），没值时是nil。nil在Swift中不代表空指针，代表的是可选类型的缺省值
-    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFilpCountLabel()
+        }
+    }
     
     @IBOutlet var cardButtons: [UIButton]!
     
@@ -62,20 +76,14 @@ class ViewController: UIViewController {
     
     var emojiChoices = ["🎃", "🤖", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇"]
     
-    var emoji = [Int: String]()
+    var emoji = [Card: String]()
     
     func emoji(for card: Card) -> String {
         
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            let randomIndex =
-            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        if emoji[card] == nil, emojiChoices.count > 0 {
+            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
-//        if emoji[card.identifier] != nil {
-//            return emoji[card.identifier]!
-//        } else {
-//            return "?"
-//        }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
     
 }

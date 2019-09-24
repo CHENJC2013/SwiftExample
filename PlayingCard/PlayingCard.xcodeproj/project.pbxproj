@@ -15,6 +15,7 @@
 		E0DF35C7230FC80600F5B846 /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DF35C6230FC80600F5B846 /* PlayingCard.swift */; };
 		E0DF35C9230FC9BE00F5B846 /* PlayingCardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DF35C8230FC9BE00F5B846 /* PlayingCardDeck.swift */; };
 		E0DF35CC230FCA6500F5B846 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DF35CB230FCA6500F5B846 /* IntExtension.swift */; };
+		E0DF35CE2313ADC800F5B846 /* PlayingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DF35CD2313ADC800F5B846 /* PlayingCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		E0DF35C6230FC80600F5B846 /* PlayingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		E0DF35C8230FC9BE00F5B846 /* PlayingCardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardDeck.swift; sourceTree = "<group>"; };
 		E0DF35CB230FCA6500F5B846 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
+		E0DF35CD2313ADC800F5B846 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				E0DF35B4230FC7EB00F5B846 /* AppDelegate.swift */,
 				E0DF35C6230FC80600F5B846 /* PlayingCard.swift */,
 				E0DF35C8230FC9BE00F5B846 /* PlayingCardDeck.swift */,
+				E0DF35CD2313ADC800F5B846 /* PlayingCardView.swift */,
 				E0DF35B6230FC7EB00F5B846 /* ViewController.swift */,
 				E0DF35B8230FC7EB00F5B846 /* Main.storyboard */,
 				E0DF35CA230FCA6500F5B846 /* Extensions */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0DF35B7230FC7EB00F5B846 /* ViewController.swift in Sources */,
+				E0DF35CE2313ADC800F5B846 /* PlayingCardView.swift in Sources */,
 				E0DF35C9230FC9BE00F5B846 /* PlayingCardDeck.swift in Sources */,
 				E0DF35C7230FC80600F5B846 /* PlayingCard.swift in Sources */,
 				E0DF35CC230FCA6500F5B846 /* IntExtension.swift in Sources */,

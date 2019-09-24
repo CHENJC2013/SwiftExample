@@ -62,22 +62,20 @@ struct PlayingCard {
 
 // CustomStringConvertible 提供了一种用文本表示一个对象或者结构的方式
 extension PlayingCard: CustomStringConvertible {
-    ///
-    /// String representation of a `PlayingCard`
-    ///
+    
     var description: String {
         return "\(rank)\(suit)"
     }
 }
 
-// Make `PlayingCard.Suit` confrom to `CustomStringConvertible`
+
 extension PlayingCard.Suit: CustomStringConvertible {
     var description: String {
         return rawValue
     }
 }
 
-// Make `PlayingCard.Rank` confrom to `CustomStringConvertible`
+
 extension PlayingCard.Rank: CustomStringConvertible {
     var description: String {
         switch self {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     // 只要类的所有变量都被初始化，类自动得到一个不需要参数的init()方法
     /*
@@ -51,37 +51,48 @@ class ViewController: UIViewController {
     
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount += 1
-        if let cardNumber = cardButtons.firstIndex(of: sender) {
+        if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
+        } else {
+            print("chosen card was not in cardButtons")
         }
     }
     
-    func updateViewFromModel() {
-//        for index in 0..<cardButtons.count {
-//        indices 属性返回一个 Range \<Index>，可以用来遍历集合中所有的有效索引
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControl.State.normal)
-                button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            } else {
-                button.setTitle("", for: UIControl.State.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 0.9917996526, green: 0.6423984766, blue: 0.01227067038, alpha: 1)
+    private func updateViewFromModel() {
+        if cardButtons != nil {
+            // for index in 0..<cardButtons.count {
+            // indices 属性返回一个 Range \<Index>，可以用来遍历集合中所有的有效索引
+            for index in cardButtons.indices {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControl.State.normal)
+                    button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                } else {
+                    button.setTitle("", for: UIControl.State.normal)
+                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5781051517, blue: 0, alpha: 0) : #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+                    
+                }
             }
         }
     }
     
-    var emojiChoices = ["🎃", "🤖", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇"]
+    var theme: String? {
+        didSet {
+            emojiChoices = theme ?? ""
+            emoji = [:]
+            updateViewFromModel()
+        }
+    }
+    private var emojiChoices = "🎃🤖🍏🍎🍐🍊🍋🍌🍉🍇"
     
-    var emoji = [Card: String]()
+    private var emoji = [Card: String]()
     
     func emoji(for card: Card) -> String {
-        
         if emoji[card] == nil, emojiChoices.count > 0 {
-            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+            let randomStringIndex = emojiChoices.index(emojiChoices.startIndex, offsetBy: emojiChoices.count.arc4random)
+            emoji[card] = String(emojiChoices.remove(at: randomStringIndex))
         }
         return emoji[card] ?? "?"
     }

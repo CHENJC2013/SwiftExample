@@ -200,6 +200,12 @@ extension PlayingCardView {
     }
 }
 
+extension CGFloat {
+    var arc4random: CGFloat {
+        return self * (CGFloat(arc4random_uniform(UInt32.max))/CGFloat(UInt32.max))
+    }
+}
+
 extension CGPoint {
     /// Get a new point with the given offset
     func offsetBy(dx: CGFloat, dy: CGFloat) -> CGPoint {

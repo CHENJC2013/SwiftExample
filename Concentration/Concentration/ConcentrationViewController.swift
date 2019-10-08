@@ -16,7 +16,7 @@ class ConcentrationViewController: UIViewController {
      2、当给变量添加lazy时，意味着它将不会初始化，直到需要使用它的时候
      3、不能在lazy变量上使用属性观察者didSet等
      */
-    private lazy var game = Concentration(numberOfPairsOfCards: (self.cardButtons.count + 1) / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: (self.cardsButton.count + 1) / 2)
     
     //private(set) 不允许设置值
     private(set) var flipCount = 0 {
@@ -46,25 +46,25 @@ class ConcentrationViewController: UIViewController {
         }
     }
     
-    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet var cardsButton: [UIButton]!
     
     
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount += 1
-        if let cardNumber = cardButtons.index(of: sender) {
+        if let cardNumber = cardsButton.index(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         } else {
-            print("chosen card was not in cardButtons")
+            print("chosen card was not in cardsButton")
         }
     }
     
     private func updateViewFromModel() {
-        if cardButtons != nil {
-            // for index in 0..<cardButtons.count {
+        if cardsButton != nil {
+            // for index in 0..<cardsButton.count {
             // indices 属性返回一个 Range \<Index>，可以用来遍历集合中所有的有效索引
-            for index in cardButtons.indices {
-                let button = cardButtons[index]
+            for index in cardsButton.indices {
+                let button = cardsButton[index]
                 let card = game.cards[index]
                 if card.isFaceUp {
                     button.setTitle(emoji(for: card), for: UIControl.State.normal)
